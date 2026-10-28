@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Дії з дробами: повторення — 8 клас</title>
+<style>
+:root{--bg:#fbfaf6;--fg:#1d2430;--mut:#5d6675;--card:#fff;--ln:#d9d6cc;--ac:#1f5fbf;--red:#c0392b;--ok:#1b7f4b;--okbg:#e4f5ea;--hi:#fff3c9;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#161a21;--fg:#e8eaee;--mut:#a3abb8;--card:#1f2530;--ln:#343c4a;--ac:#7fb0ff;--red:#ff8b7d;--ok:#6fdc9d;--okbg:#17382a;--hi:#4a3f12}}
+:root[data-theme=dark]{--bg:#161a21;--fg:#e8eaee;--mut:#a3abb8;--card:#1f2530;--ln:#343c4a;--ac:#7fb0ff;--red:#ff8b7d;--ok:#6fdc9d;--okbg:#17382a;--hi:#4a3f12}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.55 Georgia,"Times New Roman",serif;position:relative}
+main{max-width:none;margin:0;padding:16px 16px 120px;position:relative}
+#wrap{display:grid;grid-template-columns:minmax(0,1fr)}
+#board{display:none;background:var(--card);border:1px solid var(--ln);border-radius:12px;overflow:hidden;flex-direction:column}
+#bh{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;border-bottom:1px solid var(--ln)}
+#bwrap{position:relative;flex:1;background-color:var(--card);background-image:linear-gradient(var(--ln) 1px,transparent 1px),linear-gradient(90deg,var(--ln) 1px,transparent 1px);background-size:28px 28px}
+#bc{position:absolute;left:0;top:0;touch-action:none;cursor:crosshair}
+#bt{display:none}
+@media(max-width:899px){#bt{display:inline-block}body.bo #board{display:flex;position:fixed;inset:8px 8px 72px 8px;z-index:9}}
+@media(min-width:900px){#wrap{grid-template-columns:minmax(0,3fr) minmax(380px,2fr);gap:14px;padding:0 12px}#board{display:flex;position:sticky;top:calc(env(safe-area-inset-top,0px) + 10px);height:calc(100vh - 96px);margin-top:16px}}
+h1{font-size:1.5rem;margin:.2em 0}h2{font-size:1.3rem;margin:.3em 0}h3{font-size:1.05rem;margin:0 0 .4em;color:var(--ac)}
+p{margin:.5em 0}.mut{color:var(--mut)}
+nav{display:flex;gap:6px;overflow-x:auto;padding:8px 0;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+nav button{flex:none;border:1px solid var(--ln);background:var(--card);color:var(--fg);padding:7px 12px;border-radius:8px;font:inherit;font-size:.9rem;cursor:pointer}
+nav button.on{background:var(--ac);color:var(--bg);border-color:var(--ac)}
+.sec{display:none}.sec.on{display:block}
+.card,.box{background:var(--card);border:1px solid var(--ln);border-radius:10px;padding:14px;margin:12px 0}
+.box{border-left:5px solid var(--ac)}.hw{border-left-color:var(--red)}
+.f{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 3px;line-height:1.25}
+.f>span:first-child{border-bottom:1.5px solid currentColor;padding:0 4px 2px}.f>span:last-child{padding:2px 4px 0}
+sup{font-size:.7em}s{text-decoration-thickness:2px;text-decoration-color:var(--red);color:var(--red)}
+.q{font-size:1.35rem;padding:8px 0;overflow-x:auto}
+.step{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;margin:6px 0;border-radius:8px;background:var(--bg);border:1px solid var(--ln);overflow-x:auto}
+.step .n{flex:none;width:24px;height:24px;border-radius:50%;background:var(--ac);color:var(--bg);text-align:center;font:.85rem/24px sans-serif}
+.step.ans{background:var(--okbg);border-color:var(--ok)}.step.ans .n{background:var(--ok)}
+.btn{border:0;background:var(--ac);color:var(--bg);padding:9px 14px;border-radius:8px;font:inherit;font-size:.95rem;cursor:pointer;margin:6px 6px 0 0}
+.btn.g{background:transparent;color:var(--mut);border:1px solid var(--ln)}.btn:disabled{opacity:.4}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.opts{display:grid;gap:8px;margin-top:8px}
+.opt{text-align:left;border:1px solid var(--ln);background:var(--card);color:var(--fg);padding:10px 12px;border-radius:8px;font:inherit;cursor:pointer}
+.opt.ok{background:var(--okbg);border-color:var(--ok)}.opt.bad{border-color:var(--red)}
+.fb{margin-top:8px;min-height:1.4em}
+input[type=number]{width:64px;font:inherit;padding:6px;border:1px solid var(--ln);border-radius:6px;background:var(--card);color:var(--fg);text-align:center}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:1.15rem}
+.hi{background:var(--hi);padding:0 6px;border-radius:4px}
+ol.al{padding-left:22px}ol.al li{margin:4px 0}
+textarea{width:100%;font:15px/1.5 monospace;padding:8px;border:1px solid var(--ln);border-radius:8px;background:var(--bg);color:var(--fg)}
+#ov{position:absolute;left:0;top:0;width:100%;overflow:hidden;pointer-events:none;z-index:4}
+#cv{display:block;pointer-events:none;touch-action:none}#cv.on{pointer-events:auto;cursor:crosshair}
+#tb{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:10;display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center;max-width:calc(100% - 16px);background:var(--card);border:1px solid var(--ln);border-radius:14px;padding:6px 8px;box-shadow:0 4px 18px rgba(0,0,0,.25)}
+#tb button{border:1px solid var(--ln);background:var(--bg);color:var(--fg);border-radius:8px;padding:10px 14px;min-height:44px;font:inherit;font-size:1rem;cursor:pointer}
+#tb button.on{background:var(--ac);color:var(--bg);border-color:var(--ac)}
+#tb .sw{width:36px;height:36px;min-height:0;padding:0;border-radius:50%;border:2px solid var(--ln)}#tb .sw.on{border-color:var(--fg)}
+#tb input[type=color]{width:34px;height:30px;padding:0;border:1px solid var(--ln);background:none}#tb input[type=range]{width:100px}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}.chip{padding:6px 10px;border-radius:8px;background:var(--ac);color:var(--bg);font:.9rem sans-serif}.arr{color:var(--mut)}
+#bmain{display:flex;flex:1;min-height:0}#bwrap{min-width:0}.sws{display:contents}
+#tb.side{position:static;transform:none;flex-direction:column;flex-wrap:nowrap;max-width:none;width:118px;flex:none;border:0;border-left:1px solid var(--ln);border-radius:0;box-shadow:none;padding:8px;gap:6px;overflow-y:auto;justify-content:flex-start;align-items:stretch}
+#tb.side button{width:100%;padding:8px 4px;font-size:.85rem;min-height:40px}
+#tb.side .sws{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+#tb.side .sw{width:34px;height:34px;min-height:0;padding:0}
+#tb.side input[type=color]{width:100%;height:36px}#tb.side input[type=range]{width:100%}
+</style>
+</head>
+<body>
+<div id="wrap"><main id="lesson">
+<h1>Множення, ділення дробів і степінь (§ 7)</h1>
+<p class="mut">Повторюємо все разом на завданнях із підручника (§ 7). Тисни «Наступний крок» і спробуй вгадати крок, перш ніж його відкрити. Олівець і стирачка внизу працюють на всіх вкладках.</p>
+<nav id="nav" aria-label="Розділи"></nav>
+<div id="secs"></div>
+<div id="ov"><canvas id="cv"></canvas></div>
+</main>
+<aside id="board"><div id="bh"><b>Дошка</b><button class="btn g" id="bclr">Очистити дошку</button></div><div id="bmain"><div id="bwrap"><canvas id="bc"></canvas></div></div></aside></div>
+<div id="tb" role="toolbar" aria-label="Малювання">
+<button id="bt">📋 Дошка</button><button id="t-off" class="on">✋ Звичайний</button><button id="t-pen">✏️ Олівець</button><button id="t-er">🧽 Стирачка</button>
+<div class="sws"><button class="sw" data-c="#e03131" style="background:#e03131" aria-label="Червоний"></button><button class="sw" data-c="#1971c2" style="background:#1971c2" aria-label="Синій"></button><button class="sw" data-c="#2f9e44" style="background:#2f9e44" aria-label="Зелений"></button><button class="sw" data-c="#f08c00" style="background:#f08c00" aria-label="Помаранчевий"></button>
+<input id="col" type="color" value="#e03131" aria-label="Свій колір"></div><input id="sz" type="range" min="1" max="14" value="4" aria-label="Товщина"><button id="clr">🗑 Урок</button>
+</div>
+<script>
+const done=new Set();
+const R=s=>{let p;do{p=s;s=s.replace(/\{([^{}|]*)\|([^{}]*)\}/g,'<span class=f><span>$1</span><span>$2</span></span>')}while(p!==s);return s.replace(/\^\{?(-?\w+)\}?/g,'<sup>$1</sup>')};
+const P=s=>{s=s.replace(/<\/?s>/g,'');let p;do{p=s;s=s.replace(/\{([^{}|]*)\|([^{}]*)\}/g,'($1)/($2)')}while(p!==s);return s};
+const gcd=(a,b)=>b?gcd(b,a%b):Math.abs(a);
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1)),pick=a=>a[rnd(0,a.length-1)],sg=x=>x<0?'−'+(-x):''+x;
+
+/* [назва, умова, кроки, відповідь] */
+const S=[
+{id:'7.1',tab:'7.1',h:'7.1: множення всередині суми',i:'Порядок дій: спочатку множення й ділення, потім додавання й віднімання. Розклади на множники, скороти добуток, і тільки тоді додавай чи віднімай.',quiz:{q:'{5|x}−{2|x^2}·x = ?',o:['{3|x}','{7|x}','{3|x^2}','3x'],c:0,w:'Множення: {2|x^2}·x = {2|x}. Тоді {5|x}−{2|x} = {3|x}.'},t:[
+['7.1 (1)','{12a+b|3a}−{7b^2|a^2}·{a|21b}',['Множення першим: {7b^2|a^2}·{a|21b} = {7ab^2|21a^2b} = {b|3a}.','Віднімання з однаковими знаменниками: {12a+b|3a}−{b|3a} = {12a+b−b|3a} = {12a|3a}.','Скорочуємо 12a і 3a.'],'4'],
+['7.1 (2)','{m^2−n^2|x^2−9}·{x−3|m−n}−{m|x+3}',['Розкладаємо: m^2−n^2 = (m−n)(m+n); x^2−9 = (x−3)(x+3).','Множимо й скорочуємо (m−n) і (x−3): {m+n|x+3}.','Віднімання: {m+n|x+3}−{m|x+3} = {n|x+3}.'],'{n|x+3}'],
+['7.1 (3)','{a−b|2a+b}+{1|a−b}:{2a+b|a^2−b^2}',['Ділення першим. Перевертаємо: {1|a−b}·{a^2−b^2|2a+b}.','a^2−b^2 = (a−b)(a+b). Скорочуємо (a−b): {a+b|2a+b}.','Додавання: {a−b|2a+b}+{a+b|2a+b} = {2a|2a+b}.'],'{2a|2a+b}'],
+['7.1 (4)','x−{x^2−xy|x+y}·{x|x−y}',['Множення: x^2−xy = x(x−y). {x(x−y)·x|(x+y)(x−y)} = {x^2|x+y}.','x = {x|1}. Спільний знаменник x+y: {x(x+y)−x^2|x+y}.','x^2+xy−x^2 = xy.'],'{xy|x+y}']]},
+{id:'7.2',tab:'7.2–7.3',h:'7.2–7.3: з діленням',i:'Ділення спершу замінюємо множенням, потім як у 7.1. У 7.3 дивись, як літера b зникне сама.',quiz:{q:'{4|b}+{2|b}:{1|2} = ?',o:['{8|b}','{4|b}','{6|b}','{1|b}'],c:0,w:'{2|b}:{1|2} = {2|b}·2 = {4|b}. Тоді {4|b}+{4|b} = {8|b}.'},t:[
+['7.2 (1)','{10x+y|5x}−{3y^2|x^2}·{x|15y}',['Множення: {3y^2·x|x^2·15y} = {y|5x}.','Віднімання: {10x+y|5x}−{y|5x} = {10x|5x}.','Скорочуємо на 5x.'],'2'],
+['7.2 (2)','{a^2−4|9−b^2}:{a−2|3+b}−{2|3−b}',['Ділення: 9−b^2 = (3−b)(3+b). {(a−2)(a+2)|(3−b)(3+b)}·{3+b|a−2} = {a+2|3−b}.','Віднімання: {a+2|3−b}−{2|3−b} = {a|3−b}.'],'{a|3−b}'],
+['7.2 (3)','{x+y|3x−y}+{1|x+y}·{x^2−y^2|3x−y}',['Множення: x^2−y^2 = (x−y)(x+y). Скорочуємо (x+y): {x−y|3x−y}.','Додавання: {x+y|3x−y}+{x−y|3x−y} = {2x|3x−y}.'],'{2x|3x−y}'],
+['7.2 (4)','m+{m^2+mn|n−m}·{m|m+n}',['Множення: m^2+mn = m(m+n). Скорочуємо (m+n): {m·m|n−m} = {m^2|n−m}.','m = {m|1}. Спільний знаменник n−m: {m(n−m)+m^2|n−m}.','m(n−m)+m^2 = mn−m^2+m^2 = mn.'],'{mn|n−m}'],
+['7.3','{2b|m}+{a^2−b^2|5m^2}·{10m|a+b}, a = 4,5; m = 0,5',['Множення: a^2−b^2 = (a−b)(a+b). {(a−b)(a+b)·10m|5m^2(a+b)} = {2(a−b)|m}.','Додавання: {2b|m}+{2(a−b)|m} = {2b+2a−2b|m} = {2a|m}. Літера b зникла!','Підставляємо a = 4,5; m = 0,5: {2·4,5|0,5} = {9|0,5} = 18.'],'18 годин']]},
+{id:'7.4',tab:'7.4',h:'7.4: дужка і множення або ділення',i:'Спочатку дужка: спільний знаменник, один дріб. Потім множення або ділення.',quiz:{q:'(1+{2|x}):{x+2|x} = ?',o:['1','x','{x+2|x}','2'],c:0,w:'1+{2|x} = {x+2|x}. Ділимо однакові дроби, виходить 1.'},t:[
+['7.4 (1)','({x|7}+{7|x}+2)·{1|x+7}',['Дужка, спільний знаменник 7x: {x^2+49+14x|7x}.','x^2+14x+49 = (x+7)^2 (квадрат суми).','Множимо: {(x+7)^2|7x}·{1|x+7} = {x+7|7x}.'],'{x+7|7x}'],
+['7.4 (2)','(1+{m|3n}):(1−{m|3n})',['Кожна дужка: 1+{m|3n} = {3n+m|3n}; 1−{m|3n} = {3n−m|3n}.','Ділимо: {3n+m|3n}·{3n|3n−m}. Скорочуємо 3n.'],'{3n+m|3n−m}'],
+['7.4 (3)','({a|a+2}−3a)·{a+2|a}',['Дужка: {a−3a(a+2)|a+2} = {a−3a^2−6a|a+2} = {−3a^2−5a|a+2} = −{a(3a+5)|a+2}.','Множимо: −{a(3a+5)|a+2}·{a+2|a}. Скорочуємо a та (a+2).'],'−(3a+5)'],
+['7.4 (4)','(2+{x|x+1}):{9x+6|5x^2+5x}',['Дужка: {2(x+1)+x|x+1} = {3x+2|x+1}.','Розкладаємо: 9x+6 = 3(3x+2); 5x^2+5x = 5x(x+1).','Ділимо: {3x+2|x+1}·{5x(x+1)|3(3x+2)}. Скорочуємо (3x+2) та (x+1).'],'{5x|3}']]},
+{id:'7.19',tab:'7.19–7.20',h:'7.19–7.20: піднесення до степеня',i:'Спочатку спрости дужку, потім степінь діє на чисельник і знаменник. Є ще корисна формула: (u+v)^2−(u−v)^2 = 4uv.',quiz:{q:'({2|x}+1)^2−({2|x}−1)^2 = ?',o:['{8|x}','{4|x}','{4|x^2}','4'],c:0,w:'За формулою 4u, де u = {2|x}. Це {8|x}.'},t:[
+['7.19 (1)','({m|n}−{n|m})^2',['Дужка: спільний знаменник mn: {m^2−n^2|mn}.','Степінь до чисельника й знаменника: ({m^2−n^2|mn})^2 = {(m^2−n^2)^2|m^2n^2}.'],'{(m^2−n^2)^2|m^2n^2}'],
+['7.19 (2)','({a^2|b}−1)^2+({a^2|b}+1)^2',['Дужки: {a^2−b|b} та {a^2+b|b}.','Степінь: {(a^2−b)^2+(a^2+b)^2|b^2}.','Розкриваємо: a^4−2a^2b+b^2+a^4+2a^2b+b^2 = 2a^4+2b^2.'],'{2(a^4+b^2)|b^2}'],
+['7.19 (4)','({a+b|a}+{a−b|b})^2−({a+b|a}−{a−b|b})^2',['Позначимо u = {a+b|a}, v = {a−b|b}. Вираз має вигляд (u+v)^2−(u−v)^2.','Формула: (u+v)^2−(u−v)^2 = 4uv.','4uv = 4·{a+b|a}·{a−b|b} = {4(a+b)(a−b)|ab}.'],'{4(a^2−b^2)|ab}'],
+['7.20 (1)','({x|y}+{y|x})^2',['Дужка: {x^2+y^2|xy}.','Степінь: {(x^2+y^2)^2|x^2y^2}.'],'{(x^2+y^2)^2|x^2y^2}'],
+['7.20 (2)','({m|n^2}+1)^2−({m|n^2}−1)^2',['Позначимо u = {m|n^2}. Вираз = (u+1)^2−(u−1)^2.','За формулою це 4u (бо (u+1)^2−(u−1)^2 = 2·2u).'],'{4m|n^2}']]},
+{id:'7.21',tab:'7.21',h:'7.21: дріб над дробом',i:'Довга риска дробу — це ділення. Окремо спрощуємо верх, окремо низ, потім ділимо.',quiz:{q:'{1−{2|x}|1+{2|x}} = ?',o:['{x−2|x+2}','{x+2|x−2}','−1','{2|x}'],c:0,w:'Верх: {x−2|x}; низ: {x+2|x}. Ділимо, x скорочується.'},t:[
+['7.21 (1)','{1−{1|x}|1+{1|x}}',['Верх: 1−{1|x} = {x−1|x}. Низ: 1+{1|x} = {x+1|x}.','Ділимо: {x−1|x}·{x|x+1}. Скорочуємо x.'],'{x−1|x+1}'],
+['7.21 (2)','{{7x−a|a}+1|{7x+a|a}−1}',['Верх: {7x−a|a}+1 = {7x−a+a|a} = {7x|a}.','Низ: {7x+a|a}−1 = {7x+a−a|a} = {7x|a}.','Однакові вирази: {7x|a}:{7x|a} = 1.'],'1'],
+['7.21 (3)','{{1|p}−{1|2p}|{1|p^2}−{1|2p^2}}',['Верх: {2−1|2p} = {1|2p}.','Низ: {2−1|2p^2} = {1|2p^2}.','Ділимо: {1|2p}·{2p^2|1}. Скорочуємо 2p.'],'p'],
+['7.21 (4)','{c−{6c−9|c}|{3|c}−1}',['Верх: {c^2−6c+9|c} = {(c−3)^2|c}. Низ: {3−c|c}.','Ділимо: {(c−3)^2|c}·{c|3−c} = {(c−3)^2|3−c}.','3−c = −(c−3). Скорочуємо (c−3): −(c−3) = 3−c.'],'3−c'],
+['7.21 (5)','{{x|x−1}−{x+1|x}|{x|x+1}−{x−1|x}}',['Верх: {x^2−(x+1)(x−1)|x(x−1)} = {x^2−x^2+1|x(x−1)} = {1|x(x−1)}.','Низ: {x^2−(x−1)(x+1)|x(x+1)} = {1|x(x+1)}.','Ділимо: {1|x(x−1)}·{x(x+1)|1}. Скорочуємо x.'],'{x+1|x−1}']]},
+{id:'7.8',tab:'7.8–7.10',h:'7.8–7.10: складніші приклади',i:'Дужка, потім множення або ділення. Результат часто виявляється числом.',t:[
+['7.8 (1)','({x−2|x+2}−{x+2|x−2})·{x^2−4|4x}',['Дужка, спільний знаменник (x+2)(x−2) = x^2−4: {(x−2)^2−(x+2)^2|x^2−4}.','(x−2)^2−(x+2)^2 = x^2−4x+4−x^2−4x−4 = −8x. Дужка = {−8x|x^2−4}.','Множимо: {−8x|x^2−4}·{x^2−4|4x}. Скорочуємо.'],'−2'],
+['7.9 (1)','{8m|m^2−1}:({m+1|m−1}−{m−1|m+1})',['Дужка: {(m+1)^2−(m−1)^2|m^2−1} = {4m|m^2−1}.','Ділимо: {8m|m^2−1}·{m^2−1|4m}. Скорочуємо.'],'2'],
+['7.10 (1)','{36|a−3}:({a+3|a−3}−{a−3|a+3}+{36|a^2−9})',['Спільний знаменник a^2−9: {(a+3)^2−(a−3)^2+36|a^2−9}.','(a+3)^2−(a−3)^2 = 12a. 12a+36 = 12(a+3). Дужка = {12(a+3)|(a−3)(a+3)} = {12|a−3}.','Ділимо: {36|a−3}·{a−3|12}.'],'3']]}
+];
+
+const THEORY=`<h2>Теорія: три правила й порядок дій</h2>
+<div class="card"><h3>Карта правил: натискай кнопки</h3><div id=rb></div><div id=rt class=q></div><p id=rp class=mut></p></div>
+<div class="box"><h3>Порядок дій</h3><div class=flow><span class=chip>1. Дужки</span><span class=arr>→</span><span class=chip>2. Степінь</span><span class=arr>→</span><span class=chip>3. × та ÷ зліва направо</span><span class=arr>→</span><span class=chip>4. + та −</span></div></div>
+<div class="box"><h3>Алгоритм на будь-яке завдання</h3><div class=flow><span class=chip>Яка дія?</span><span class=arr>→</span><span class=chip>Розклади на множники</span><span class=arr>→</span><span class=chip>Один дріб</span><span class=arr>→</span><span class=chip>Скороти</span><span class=arr>→</span><span class=chip>Відповідь</span></div><ol class="al"><li>Для ÷ переверни другий дріб.</li><li>Для + і − потрібен спільний знаменник.</li><li>Мінус не губи: b−a = −(a−b).</li><li>Скорочують множники (дужки), а не доданки!</li></ol></div>`;
+
+function card(a){const d=document.createElement('div');d.className='card';const s=a[2].concat(['Відповідь: '+a[3]]),n=s.length;
+d.innerHTML='<h3>'+a[0]+'</h3><div class="q">'+R(a[1])+'</div><div class="st"></div><button class="btn">Наступний крок</button><button class="btn g">Спочатку</button>';
+let i=0;const st=d.querySelector('.st'),[b1,b2]=d.querySelectorAll('button');
+b1.onclick=()=>{if(i<n){const l=i==n-1,p=document.createElement('div');p.className='step'+(l?' ans':'');p.innerHTML='<span class="n">'+(l?'✓':i+1)+'</span><div>'+R(s[i])+'</div>';st.appendChild(p);i++;if(l){b1.disabled=true;done.add(a[0])}}};
+b2.onclick=()=>{st.innerHTML='';i=0;b1.disabled=false;done.delete(a[0])};return d}
+function quiz(z){const d=document.createElement('div');d.className='card';d.innerHTML='<h3>Схоже завдання: перевір себе</h3><div class="q">'+R(z.q)+'</div><div class="opts"></div><div class="fb" aria-live="polite"></div>';
+const o=d.querySelector('.opts'),fb=d.querySelector('.fb');
+z.o.forEach((x,k)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=R(x);b.onclick=()=>{if(k===z.c){b.classList.add('ok');fb.innerHTML='Правильно. '+R(z.w);o.querySelectorAll('button').forEach(e=>e.disabled=true)}else{b.classList.add('bad');b.disabled=true;fb.textContent='Ще ні, спробуй ще раз.'}};o.appendChild(b)});return d}
+
+const nav=document.getElementById('nav'),secs=document.getElementById('secs');
+function add(id,t,el){const b=document.createElement('button');b.textContent=t;b.onclick=()=>show(id);b.dataset.id=id;nav.appendChild(b);el.id='s'+id;el.className='sec';secs.appendChild(el)}
+function show(id){if(cur)persistNow();if(id==='z')upd();cx.clearRect(0,0,cv.width,cv.height);document.querySelectorAll('.sec').forEach(e=>e.classList.toggle('on',e.id=='s'+id));nav.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.id==id));scrollTo(0,0);cur=id;fit();if(store[id])loadImg(cx,store[id])}
+
+/* ---------- розминка ---------- */
+let stars=0;const bump=()=>{stars++;document.querySelectorAll('.stars').forEach(e=>e.textContent='⭐ '+stars)};
+const gcard=(t,i)=>{const d=document.createElement('div');d.className='card';d.innerHTML='<h3>'+t+'</h3><p class=mut>'+i+'</p><div class=q></div><div class=ga></div><div class=fb aria-live=polite></div>';return d};
+const REC=[['{3|7}','{7|3}','{3|7}','−{7|3}'],['5','{1|5}','5','−{1|5}'],['{2x|3}','{3|2x}','{2|3x}','{3x|2}'],['−{4|9}','−{9|4}','{9|4}','−{4|9}'],['{1|x}','x','{1|x^2}','−x'],['7x^2','{1|7x^2}','{7|x^2}','{x^2|7}']];
+function g1(){const d=gcard('Гра 1: знайди обернений','Обери дріб, обернений до заданого.'),q=d.querySelector('.q'),ga=d.querySelector('.ga'),fb=d.querySelector('.fb');ga.className='ga opts';
+function nw(){const it=pick(REC);q.innerHTML=R(it[0]);fb.textContent='';ga.innerHTML='';const o=[0,1,2,3].map(k=>[it[k+1]===undefined?0:it[k+1],k===0]).filter(x=>x[0]);o.sort(()=>Math.random()-.5);o.forEach(([t,c])=>{const b=document.createElement('button');b.className='opt';b.innerHTML=R(t);b.onclick=()=>{if(c){b.classList.add('ok');bump();fb.textContent='Так! ✅';setTimeout(nw,900)}else{b.classList.add('bad');fb.textContent='Ні: переверни, але мінус лишається.'}};ga.appendChild(b)})}
+nw();return d}
+function g2(){const d=gcard('Гра 2: поділи числові дроби','Впиши нескоротний дріб: угорі чисельник, внизу знаменник.'),q=d.querySelector('.q'),ga=d.querySelector('.ga'),fb=d.querySelector('.fb');let a,b,c,e,n,m;
+function nw(){a=rnd(1,8);b=rnd(2,9);c=rnd(1,8);e=rnd(2,9);if(Math.random()<.3)a=-a;n=a*e;m=b*c;q.innerHTML=R('{'+sg(a)+'|'+b+'}:{'+c+'|'+e+'} = ');
+ga.innerHTML=`<span class=f><input type=number class=i1><input type=number class=i2></span> <button class=btn>Перевірити</button><button class='btn g'>Підказка</button><button class='btn g'>Інше</button>`;fb.textContent='';
+const[i1,i2]=ga.querySelectorAll('input'),[ok,hn,nx]=ga.querySelectorAll('button');
+ok.onclick=()=>{const p=+i1.value,r=+i2.value;if(!i1.value||!r){fb.textContent='Впиши обидва числа.';return}if(p*m!==n*r){fb.textContent='Ще ні. Переверни другий дріб і перемнож.';return}if(r<0||gcd(Math.abs(p),Math.abs(r))>1){fb.textContent='Вірно, але скороти ще (знак пиши вгорі).';return}bump();fb.textContent='Так! ✅';setTimeout(nw,1000)};
+hn.onclick=()=>{fb.innerHTML=R('{'+sg(a)+'|'+b+'}·{'+e+'|'+c+'} = {'+sg(n)+'|'+m+'}')+'. Тепер скороти.'};nx.onclick=nw}
+nw();return d}
+const OPS=[['{x|2}+{1|x}·{x|3}',2],['({x|2}+1)·{2|x}',0],['{1|a}+({a|b})^2',1],['{a|3}−{6|a}:{2|a}',2],['{x|2}+{x|3}',3]],OPN=['Дужки','Степінь','Множення або ділення','Додавання або віднімання'];
+function g3(){const d=gcard('Гра 3: що робимо першим?','Порядок дій: дужки → степінь → × і ÷ → + і −.'),q=d.querySelector('.q'),ga=d.querySelector('.ga'),fb=d.querySelector('.fb');ga.className='ga opts';
+function nw(){const it=pick(OPS);q.innerHTML=R(it[0]);fb.textContent='';ga.innerHTML='';OPN.forEach((t,k)=>{const b=document.createElement('button');b.className='opt';b.textContent=t;b.onclick=()=>{if(k===it[1]){b.classList.add('ok');bump();fb.textContent='Так! ✅';setTimeout(nw,1000)}else{b.classList.add('bad');fb.textContent='Ні. Згадай порядок дій.'}};ga.appendChild(b)})}
+nw();return d}
+
+/* ---------- ігри на повторення ---------- */
+const sh=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(p=>p[1]);
+const HINT={a:'Додавання й віднімання: спільний знаменник, потім чисельники.',m:'Множення: зверху·зверху, знизу·знизу, потім скороти.',d:'Ділення: другий дріб перевертаємо й множимо.',p:'Степінь: до чисельника й до знаменника; парний степінь без мінуса.',c:'Найменший спільний знаменник: найменше число або вираз, що ділиться на обидва знаменники.'};
+const BANK=[
+['a','{2|x}+{3|x}','{5|x}','{5|2x}','{6|x}','{5|x^2}'],
+['a','{7|y}−{3|y}','{4|y}','{4|y^2}','{10|y}','{4|2y}'],
+['a','{1|x}+{1|y}','{x+y|xy}','{2|x+y}','{2|xy}','{1|xy}'],
+['a','{3|a}−{1|2a}','{5|2a}','{2|a}','{5|a}','{4|2a}'],
+['a','{x|2}+{x|3}','{5x|6}','{2x|5}','{x|5}','{2x|6}'],
+['a','{a+1|a}−{1|a}','1','a','{1|a}','0'],
+['m','{2|3}·{9|4}','{3|2}','{11|7}','{2|3}','6'],
+['m','{a|b}·{b|a}','1','ab','{a^2|b^2}','0'],
+['m','{3x|y}·{y^2|6x}','{y|2}','{2|y}','{y^2|2}','{18x|y^3}'],
+['m','{a^2|b}·{b^2|a}','ab','{a|b}','a^3b^3','2ab'],
+['d','{3|4}:{9|8}','{2|3}','{27|32}','{3|2}','{1|2}'],
+['d','{a|2}:{a|4}','2','{1|2}','{a^2|8}','a'],
+['d','{6x|y}:3x','{2|y}','{18x^2|y}','{2x|y}','{x|2y}'],
+['d','{m^2|n}:{m|n^2}','mn','{m|n}','{m^3|n^3}','{n|m}'],
+['p','({2|3})^3','{8|27}','{6|9}','{8|3}','{2|27}'],
+['p','(−{a|b})^3','−{a^3|b^3}','{a^3|b^3}','−{a^3|b}','−{3a|3b}'],
+['p','({x^2|y})^4','{x^8|y^4}','{x^6|y^4}','{x^8|y}','{x^2|y^4}'],
+['p','(−{2m|n^2})^2','{4m^2|n^4}','−{4m^2|n^4}','{2m^2|n^4}','{4m^2|n^2}']];
+const CD=[['c','{1|4}+{1|6}','12','10','24','6'],['c','{1|a}+{1|b}','ab','a+b','a','b'],['c','{3|2x}−{1|x}','2x','x','3x','2'],['c','{1|x}+{1|x^2}','x^2','x','x^3','2x'],['c','{5|6}−{1|9}','18','54','15','3'],['c','{2|a}+{3|a+1}','a(a+1)','a+1','2a+3','a^2']];
+const ER=[
+/* 1. додавання: складають знаменники */
+{l:['{1|x}+{1|y} = {1+1|x+y}','= {2|x+y}','Відповідь: {2|x+y}'],e:0,w:'Знаменники не додаємо! Спільний знаменник xy: {y+x|xy}.'},
+{l:['{2|a}+{3|b} = {2+3|a+b}','= {5|a+b}','Відповідь: {5|a+b}'],e:0,w:'Знаменники не додаємо! Спільний знаменник ab: {2b+3a|ab}.'},
+{l:['{1|3}+{1|5} = {1+1|3+5}','= {2|8}','= {1|4}'],e:0,w:'Знаменники не додаємо. Спільний знаменник 15: {5+3|15} = {8|15}.'},
+/* 2. віднімання: мінус перед дужкою */
+{l:['{x+1|x}−{x−1|x} = {x+1−x−1|x}','= {0|x}','Відповідь: 0'],e:0,w:'Мінус перед дужкою міняє знаки: x+1−(x−1) = x+1−x+1 = 2. Відповідь {2|x}.'},
+{l:['{2x+3|x}−{x+1|x} = {2x+3−x+1|x}','= {x+4|x}','Відповідь: {x+4|x}'],e:0,w:'2x+3−(x+1) = 2x+3−x−1 = x+2. Відповідь {x+2|x}.'},
+{l:['{a−2|a}−{a−5|a} = {a−2−a−5|a}','= −{7|a}','Відповідь: −{7|a}'],e:0,w:'a−2−(a−5) = a−2−a+5 = 3. Відповідь {3|a}.'},
+/* 3. множення: помилка в числах */
+{l:['{2|3}·{6|5} = {2·6|3·5}','= {12|15}','= {2|3}'],e:2,w:'12 : 15 = 4 : 5 (ділимо на 3), тож {4|5}.'},
+{l:['{3|4}·{8|9} = {3·8|4·9}','= {24|36}','= {1|2}'],e:2,w:'24 : 36 = 2 : 3 (ділимо на 12), тож {2|3}.'},
+{l:['{5|6}·{9|10} = {5·9|6·10}','= {45|60}','= {2|3}'],e:2,w:'45 : 60 = 3 : 4 (ділимо на 15), тож {3|4}.'},
+/* 4. множення: помилка в степенях букв */
+{l:['{a^2|b}·{b^3|a} = {a^2b^3|ab}','= {a·b^2|1}','= ab^3'],e:2,w:'b^3 : b = b^2, тому відповідь ab^2.'},
+{l:['{x^3|y}·{y^2|x} = {x^3y^2|xy}','= {x^2·y|1}','= x^2y^2'],e:2,w:'Лишилось x^2·y, тобто x^2y.'},
+{l:['{m|n^2}·{n^3|m^2} = {mn^3|n^2m^2}','= {n|m}','= {m|n}'],e:2,w:'n^3 : n^2 = n угорі, m : m^2 = 1/m знизу. Правильно {n|m}.'},
+/* 5. ділення: перевернули не той дріб */
+{l:['{2|3}:{4|5} = {3|2}·{4|5}','= {12|10}','= {6|5}'],e:0,w:'Перевертаємо тільки другий дріб: {2|3}·{5|4}.'},
+{l:['{x|3}:{2|y} = {3|x}·{2|y}','= {6|xy}','Відповідь: {6|xy}'],e:0,w:'Перевертаємо другий дріб: {x|3}·{y|2} = {xy|6}.'},
+{l:['{5|a}:{b|7} = {a|5}·{b|7}','= {ab|35}','Відповідь: {ab|35}'],e:0,w:'Перевертаємо другий дріб: {5|a}·{7|b} = {35|ab}.'},
+/* 6. ділення: помилка в скороченні */
+{l:['{x|2}:{x|4} = {x|2}·{4|x}','= {4x|2x}','= 4'],e:2,w:'4x : 2x = 2, а не 4.'},
+{l:['{a|3}:{a|9} = {a|3}·{9|a}','= {9a|3a}','= 9'],e:2,w:'9a : 3a = 3, а не 9.'},
+{l:['{2m|5}:{m|10} = {2m|5}·{10|m}','= {20m|5m}','= 20'],e:2,w:'20m : 5m = 4, а не 20.'},
+/* 7. степінь: помилка в числах */
+{l:['({2|3})^3 = {2^3|3^3}','= {6|9}','= {2|3}'],e:1,w:'2^3 = 2·2·2 = 8, а не 6.'},
+{l:['({3|2})^2 = {3^2|2^2}','= {6|4}','= {3|2}'],e:1,w:'3^2 = 3·3 = 9, а 2^2 = 4. Це {9|4}.'},
+{l:['({x|2})^4 = {x^4|2^4}','= {x^4|8}','Відповідь: {x^4|8}'],e:1,w:'2^4 = 2·2·2·2 = 16, а не 8.'},
+/* 8. степінь: помилка зі знаком */
+{l:['(−{x|2})^3 = {x^3|2^3}','= {x^3|8}','Відповідь: {x^3|8}'],e:0,w:'Степінь непарний: мінус лишається, −{x^3|8}.'},
+{l:['(−{a|3})^3 = {a^3|3^3}','= {a^3|27}','Відповідь: {a^3|27}'],e:0,w:'Степінь 3 непарний: мінус лишається, −{a^3|27}.'},
+{l:['(−{y|4})^2 = −{y^2|4^2}','= −{y^2|16}','Відповідь: −{y^2|16}'],e:0,w:'Степінь 2 парний: мінус зникає, {y^2|16}.'},
+/* 9. степінь: забули знаменник */
+{l:['({a|b})^2 = {a^2|b}','= {a^2|b}','Відповідь: {a^2|b}'],e:0,w:'Степінь діє і на знаменник: {a^2|b^2}.'},
+{l:['({m|n})^3 = {m^3|n}','= {m^3|n}','Відповідь: {m^3|n}'],e:0,w:'Степінь діє і на знаменник: {m^3|n^3}.'},
+{l:['({2|x})^2 = {4|x}','= {4|x}','Відповідь: {4|x}'],e:0,w:'Знаменник теж у степінь: {4|x^2}.'},
+/* 10. скорочують доданки */
+{l:['{x+2|2} = {x+1|1}','= x+1','Відповідь: x+1'],e:0,w:'Скорочують множники, а не доданки! {x+2|2} скоротити не можна.'},
+{l:['{3x+6|3} = {x+6|1}','= x+6','Відповідь: x+6'],e:0,w:'Ділити треба обидва доданки: {3(x+2)|3} = x+2.'},
+{l:['{a+b|a} = {b|1}','= b','Відповідь: b'],e:0,w:'a+b не можна скоротити на a: скорочують лише множники.'}];
+const ST=[
+{q:'{4|9}·{3|8}',s:['Записуємо: {4·3|9·8}','Скорочуємо 4 і 8, 3 і 9: {1·1|3·2}','Відповідь: {1|6}']},
+{q:'{x|3}:{x^2|6}',s:['Перевертаємо другий дріб: {x|3}·{6|x^2}','Скорочуємо 3 і 6, x і x^2: {1·2|1·x}','Відповідь: {2|x}']},
+{q:'{1|x}+{2|3x}',s:['Спільний знаменник 3x: {3|3x}+{2|3x}','Додаємо чисельники: {3+2|3x}','Відповідь: {5|3x}']},
+{q:'({2x|y})^3',s:['Чисельник у степінь: (2x)^3 = 8x^3','Знаменник у степінь: y^3','Відповідь: {8x^3|y^3}']},
+{q:'{5|a}−{2|a^2}',s:['Спільний знаменник a^2: {5a|a^2}−{2|a^2}','Віднімаємо чисельники: {5a−2|a^2}','Відповідь: {5a−2|a^2}']}];
+
+function mc(title,intro,bank,pre){const d=gcard(title,intro),q=d.querySelector('.q'),ga=d.querySelector('.ga'),fb=d.querySelector('.fb');ga.className='ga opts';let queue=[],it;
+function nw(){if(!queue.length)queue=sh(bank);it=queue.pop();q.innerHTML=(pre?pre+' ':'')+R(it[1])+(pre?'':' = ?');fb.textContent='';ga.innerHTML='';sh(it.slice(2)).forEach(t=>{const b=document.createElement('button');b.className='opt';b.innerHTML=R(t);b.onclick=()=>{if(t===it[2]){b.classList.add('ok');bump();fb.textContent='Так! ✅';ga.querySelectorAll('button').forEach(x=>x.disabled=true);setTimeout(nw,1000)}else{b.classList.add('bad');b.disabled=true;fb.textContent='Підказка: '+HINT[it[0]]}};ga.appendChild(b)})}
+nw();return d}
+function g5(){const d=gcard('Гра: встановіть відповідність','Натисни вираз ліворуч, а потім його відповідь праворуч.'),q=d.querySelector('.q'),ga=d.querySelector('.ga'),fb=d.querySelector('.fb');q.textContent='';
+function nw(){const seen=new Set(),ops=new Set(),it=[];sh(BANK).forEach(x=>{if(!seen.has(x[2])&&!ops.has(x[0])){seen.add(x[2]);ops.add(x[0]);it.push(x)}});
+ga.className='ga';ga.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class=L style="display:grid;gap:8px"></div><div class=Rr style="display:grid;gap:8px"></div></div>';fb.textContent='';
+const L=ga.querySelector('.L'),Rr=ga.querySelector('.Rr');let sel=null,okc=0;
+it.forEach((x,i)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=R(x[1]);b.onclick=()=>{if(b.disabled)return;L.querySelectorAll('button').forEach(y=>y.style.outline='');b.style.outline='3px solid var(--ac)';sel=i};L.appendChild(b)});
+sh(it.map((x,i)=>[x[2],i])).forEach(([t,i])=>{const b=document.createElement('button');b.className='opt';b.innerHTML=R(t);b.onclick=()=>{if(b.disabled)return;if(sel===null){fb.textContent='Спочатку обери вираз ліворуч.';return}
+if(sel===i){b.classList.add('ok');b.disabled=true;const lb=L.children[i];lb.classList.add('ok');lb.disabled=true;lb.style.outline='';sel=null;fb.textContent='';if(++okc===it.length){bump();fb.textContent='Усі пари знайдено! 🎉';setTimeout(nw,1400)}}
+else{b.classList.add('bad');setTimeout(()=>b.classList.remove('bad'),600);fb.textContent='Не збігається. '+HINT[it[sel][0]]}};Rr.appendChild(b)})}
+nw();return d}
+function g6(){const d=gcard('Гра: знайди помилку','Натисни на рядок, де помилка.'),q=d.querySelector('.q'),ga=d.querySelector('.ga'),fb=d.querySelector('.fb');ga.className='ga opts';let queue=[];
+function nw(){if(!queue.length)queue=sh(ER);const it=queue.pop();q.textContent='Де помилка?';ga.innerHTML='';fb.textContent='';it.l.forEach((t,k)=>{const b=document.createElement('button');b.className='opt';b.innerHTML=R(t);b.onclick=()=>{if(k===it.e){b.classList.add('ok');bump();fb.innerHTML='Так! '+R(it.w)+` <button class='btn g'>Далі</button>`;fb.querySelector('button').onclick=nw}else{b.classList.add('bad');fb.textContent='Цей рядок правильний. Дивись уважніше.'}};ga.appendChild(b)})}
+nw();return d}
+function g7(){const d=gcard('Гра: збери розв’язок','Натискай кроки в правильному порядку: 1, 2, 3.'),q=d.querySelector('.q'),ga=d.querySelector('.ga'),fb=d.querySelector('.fb');let queue=[],it,k;
+function nw(){if(!queue.length)queue=sh(ST);it=queue.pop();k=0;q.innerHTML=R(it.q)+' = ?';fb.textContent='';ga.className='ga';ga.innerHTML='<div class=st></div><div class=opts></div>';const st=ga.querySelector('.st'),op=ga.querySelector('.opts');
+sh(it.s.map((t,i)=>[t,i])).forEach(([t,i])=>{const b=document.createElement('button');b.className='opt';b.innerHTML=R(t);b.onclick=()=>{if(i===k){b.remove();const p=document.createElement('div');p.className='step'+(k===2?' ans':'');p.innerHTML='<span class="n">'+(k+1)+'</span><div>'+R(t)+'</div>';st.appendChild(p);k++;fb.textContent='';if(k===3){bump();fb.textContent='Молодець! ✅';setTimeout(nw,1600)}}else{b.classList.add('bad');setTimeout(()=>b.classList.remove('bad'),600);fb.textContent='Ще ні. Який крок іде '+(k+1)+'-м?'}};op.appendChild(b)})}
+nw();return d}
+function g8(){const d=gcard('Гра: правда чи ні?','Чи правильна рівність?'),q=d.querySelector('.q'),ga=d.querySelector('.ga'),fb=d.querySelector('.fb');let queue=[],it,shown;
+function nw(){if(!queue.length)queue=sh(BANK);it=queue.pop();shown=Math.random()<.5?it[2]:pick(it.slice(3));q.innerHTML=R(it[1]+' = '+shown);fb.textContent='';ga.innerHTML=`<button class=btn>Так ✅</button><button class='btn g'>Ні ❌</button>`;const[y,n]=ga.querySelectorAll('button');
+const ans=v=>{ga.querySelectorAll('button').forEach(x=>x.disabled=true);if(v===(shown===it[2])){bump();fb.textContent='Вірно!'}else fb.innerHTML='Ні. Правильно: '+R(it[1]+' = '+it[2]);setTimeout(nw,1800)};y.onclick=()=>ans(true);n.onclick=()=>ans(false)}
+nw();return d}
+
+/* ---------- збірка сторінки ---------- */
+let e=document.createElement('div');e.innerHTML='<h2>Розминка <span id=stars class="hi stars">⭐ 0</span></h2><div class=box>Спочатку розімнемося на числах. Правило те саме, що й для букв.</div>';[g1,g2,g3].forEach(f=>e.appendChild(f()));
+const th=document.createElement('div');th.innerHTML=THEORY;add('t','Теорія',th);add('w','Розминка',e);
+const gd=document.createElement('div');gd.innerHTML='<h2>🎮 Ігри на повторення <span class="hi stars">⭐ 0</span></h2><div class=box><b>Нагадування:</b><br>'+R('+ та −: спільний знаменник, потім чисельники')+'<br>'+R('·: {a|b}·{c|d} = {ac|bd}')+'<br>'+R(':: другий дріб перевертаємо')+'<br>'+R('степінь: ({a|b})^n = {a^n|b^n}')+'</div>';
+[()=>mc('Гра 1: вибери правильну відповідь','Додавання, віднімання, множення, ділення, степінь. Помилився? З’явиться підказка.',BANK),()=>mc('Гра 2: спільний знаменник','Для додавання й віднімання. Обери найменший спільний знаменник.',CD,'Найменший спільний знаменник для'),g5,g6,g7,g8].forEach(f=>gd.appendChild(f()));add('g','🎮 Ігри',gd);
+S.forEach(s=>{const d=document.createElement('div');d.innerHTML='<h2>'+s.h+'</h2><div class="box'+(s.k==='h'?' hw':'')+'">'+s.i+'</div>';s.t.forEach(a=>d.appendChild(card(a)));if(s.quiz)d.appendChild(quiz(s.quiz));add(s.id,s.tab,d)});
+e=document.createElement('div');e.innerHTML=`<h2>Підсумок</h2><div class="box"><ol class="al"><li>Порядок дій: дужки, степінь, × і ÷, потім + і −.</li><li>Ділення = множення на обернений.</li><li>Степінь діє на чисельник і знаменник.</li><li>Для + і − потрібен спільний знаменник.</li><li>Розклади на множники, потім скорочуй; b−a = −(a−b).</li></ol></div>
+<div class="card"><h3>Текст для зошита: результати</h3><p class=mut>Текст збирається з розв’язаних завдань (відкрито всі кроки до відповіді). Перепиши його в зошит, зроби фото домашньої роботи й надішли в Classroom.</p><textarea id=res readonly rows=22></textarea><button class=btn id=rcp>Копіювати текст</button><span id=rmsg class=mut></span></div>`;add('z','Підсумок',e);
+function upd(){const r=document.getElementById('res');if(!r)return;const o=[];S.forEach(s=>{o.push('№'+s.id);s.t.forEach(a=>o.push(a[0].replace(/^\S+ /,'')+' '+(done.has(a[0])?P(a[1])+' = '+P(a[3]):'— ще не розв’язано')));o.push('')});r.value=o.join('\n')}
+document.getElementById('rcp').onclick=()=>{upd();const r=document.getElementById('res');r.select();try{navigator.clipboard.writeText(r.value).then(()=>{document.getElementById('rmsg').textContent=' Скопійовано ✅'},()=>{document.execCommand('copy')})}catch(x){try{document.execCommand('copy')}catch(y){}}};
+
+(function(){const M={m:['× Множення','{a|b}·{c|d} = {ac|bd}','Зверху·зверху, знизу·знизу. Спершу розклади на множники й скороти.'],d:['÷ Ділення','{a|b}:{c|d} = {a|b}·{d|c}','Другий дріб перевертаємо, далі як множення.'],p:['Степінь','({a|b})^n = {a^n|b^n}','Степінь до чисельника й до знаменника. Парний степінь: мінус зникає.'],s:['+ та −','{a|c}+{b|c} = {a+b|c}','Спочатку спільний знаменник (розклади знаменники!), потім чисельники.'],n:['Дріб над дробом','{{a|b}|{c|d}} = {a|b}:{c|d}','Довга риска — це ділення. Окремо спрости верх і низ.']},rb=document.getElementById('rb'),rt=document.getElementById('rt'),rp=document.getElementById('rp');
+Object.keys(M).forEach((k,i)=>{const b=document.createElement('button');b.className='btn g';b.textContent=M[k][0];b.onclick=()=>{rb.querySelectorAll('button').forEach(x=>x.className='btn g');b.className='btn';rt.innerHTML=R(M[k][1]);rp.textContent=M[k][2]};rb.appendChild(b);if(!i)b.onclick()})})();
+
+/* ---------- олівець, стирачка, дошка ---------- */
+const cv=document.getElementById('cv'),cx=cv.getContext('2d'),ov=document.getElementById('ov'),lesson=document.getElementById('lesson'),bc=document.getElementById('bc'),bx=bc.getContext('2d'),store={};let cur=null,tool='off',col='#e03131',bl=false,bsz=false,pt;
+cv._s=1;bc._s=1;cv.style.touchAction=bc.style.touchAction='none';
+const DPR=()=>Math.min(window.devicePixelRatio||1,2);
+function resize(c,ctx,w,h,s){const o=c._s||1,t=document.createElement('canvas');t.width=c.width;t.height=c.height;t.getContext('2d').drawImage(c,0,0);c.width=Math.max(1,Math.round(w*s));c.height=Math.max(1,Math.round(h*s));c.style.width=w+'px';c.style.height=h+'px';c._s=s;c._w=w;c._h=h;ctx.setTransform(s,0,0,s,0,0);ctx.drawImage(t,0,0,t.width/o,t.height/o)}
+function loadImg(ctx,v){const o=typeof v==='string'?{u:v,s:1}:v;if(!o||!o.u)return;const im=new Image;im.onload=()=>ctx.drawImage(im,0,0,im.width/o.s,im.height/o.s);im.src=o.u}
+function persistNow(){clearTimeout(pt);try{if(cur)store[cur]={u:cv.toDataURL(),s:cv._s};if(bsz)store.__board={u:bc.toDataURL(),s:bc._s};localStorage.setItem('urok-mix',JSON.stringify(store))}catch(x){}}
+function persist(){clearTimeout(pt);pt=setTimeout(persistNow,700)}
+function fit(){const w=lesson.clientWidth,h=lesson.offsetHeight;ov.style.height=h+'px';const W=Math.max(w,cv._w||0),H=Math.max(h,cv._h||0),s=Math.max(1,Math.min(DPR(),Math.sqrt(12e6/(W*H))));if(!cv._w||W>cv._w||H>cv._h||s<cv._s-.01)resize(cv,cx,W,H,s)}
+function fitB(){const r=bc.parentElement.getBoundingClientRect(),w=Math.floor(r.width),h=Math.floor(r.height);if(w<2||h<2)return;bsz=true;const s=DPR();if(bc._w!==w||bc._h!==h||bc._s!==s)resize(bc,bx,w,h,s);if(!bl&&store.__board){bl=true;loadImg(bx,store.__board)}}
+function setTool(t){tool=t;cv.classList.toggle('on',t!=='off');['off','pen','er'].forEach(k=>document.getElementById('t-'+k).classList.toggle('on',k===t))}
+['off','pen','er'].forEach(k=>document.getElementById('t-'+k).onclick=()=>setTool(k));
+document.querySelectorAll('#tb .sw').forEach(b=>b.onclick=()=>{col=b.dataset.c;document.getElementById('col').value=col;document.querySelectorAll('#tb .sw').forEach(x=>x.classList.toggle('on',x===b));if(tool!=='er')setTool('pen')});
+document.getElementById('col').oninput=ev=>{col=ev.target.value;document.querySelectorAll('#tb .sw').forEach(x=>x.classList.remove('on'));if(tool!=='er')setTool('pen')};
+document.getElementById('clr').onclick=()=>{cx.clearRect(0,0,cv.width,cv.height);persistNow()};
+document.getElementById('bclr').onclick=()=>{bx.clearRect(0,0,bc.width,bc.height);persistNow()};
+document.getElementById('bt').onclick=()=>{document.body.classList.toggle('bo');setTimeout(fitB,60)};
+function bindDraw(c,ctx,active){let dr=false,px=0,py=0,mx=0,my=0;
+const xy=e=>{const r=c.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};
+const st=e=>{const s=+document.getElementById('sz').value,er=tool==='er';ctx.lineCap=ctx.lineJoin='round';ctx.globalCompositeOperation=er?'destination-out':'source-over';ctx.strokeStyle=col;let w=er?Math.max(30,s*8):s;if(!er&&e.pointerType==='pen'&&e.pressure>0)w=s*(.4+e.pressure*1.2);ctx.lineWidth=w};
+c.addEventListener('pointerdown',e=>{if(!active())return;dr=true;[px,py]=xy(e);mx=px;my=py;c.setPointerCapture(e.pointerId);st(e);for(let i=0;i<(tool==='er'?2:1);i++){ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px+.01,py);ctx.stroke()}e.preventDefault()});
+c.addEventListener('pointermove',e=>{if(!dr)return;const l=e.getCoalescedEvents?e.getCoalescedEvents():[];(l.length?l:[e]).forEach(p=>{const[x,y]=xy(p);st(e);const nx=(px+x)/2,ny=(py+y)/2;for(let i=0;i<(tool==='er'?2:1);i++){ctx.beginPath();ctx.moveTo(mx,my);ctx.quadraticCurveTo(px,py,nx,ny);ctx.stroke()}mx=nx;my=ny;px=x;py=y});e.preventDefault()});
+const end=()=>{if(!dr)return;dr=false;ctx.beginPath();ctx.moveTo(mx,my);ctx.lineTo(px,py);ctx.stroke();persist()};
+['pointerup','pointercancel','lostpointercapture'].forEach(n=>c.addEventListener(n,end))}
+bindDraw(cv,cx,()=>tool!=='off');bindDraw(bc,bx,()=>true);
+if(window.ResizeObserver){new ResizeObserver(fit).observe(lesson);new ResizeObserver(fitB).observe(document.getElementById('bwrap'))}
+addEventListener('resize',()=>{fit();fitB()});
+try{Object.assign(store,JSON.parse(localStorage.getItem('urok-mix')||'{}'))}catch(x){}
+const tb=document.getElementById('tb'),mq=matchMedia('(min-width:900px)');
+function place(){if(mq.matches){document.getElementById('bmain').appendChild(tb);tb.classList.add('side')}else{document.body.appendChild(tb);tb.classList.remove('side')}setTimeout(()=>{fit();fitB()},50)}
+mq.addEventListener('change',place);place();
+show('t');fitB();
+</script>
+</body>
+</html>
